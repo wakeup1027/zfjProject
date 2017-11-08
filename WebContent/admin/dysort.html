@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>电影归类</title>
+<link rel="stylesheet" type="text/css" href="${BASE_PATH}css/easyui/css/default.css" />
+<link rel="stylesheet" type="text/css" href="${BASE_PATH}js/easyui/js/themes/gray/easyui.css" />
+<link rel="stylesheet" type="text/css" href="${BASE_PATH}js/easyui/js/themes/icon.css" />
+<script type="text/javascript" src="${BASE_PATH}js/easyui/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="${BASE_PATH}js/easyui/js/jQuery.easyui.js"></script>
+<style>
+body{background:#fff; text-align:center;}
+.btnClass{width:50%; padding:100px 300px; color:#fff; background:#3D9BF2; border-radius:10px; border:none; font-size:30px; margin: 50px auto; cursor:pointer; outline:none;}
+.btnClass:hover{background:#3D94F1;}
+</style>
+</head>
+<body>
+<button class="btnClass" onclick="guilei()">归类吧！皮卡丘</button>
+<div id="load" style="width:32px; height:32px; background:url(${BASE_PATH}images/5-121204193R5-50.gif); margin:0px auto; display:none;"></div>
+<script>
+function guilei(){
+	$.ajax({
+			type: "POST",
+			url: "${BASE_PATH}dysort/range",
+			dataType: "json",
+			beforeSend:function(){$("#load").css("display","block");},
+			complete:function(){$("#load").css("display","none");},
+			success: function(data){
+				$.messager.alert("消息提醒",data.status);
+			}
+	});
+}
+</script>
+</body>
+</html>

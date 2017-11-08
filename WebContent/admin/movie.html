@@ -1,0 +1,397 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>科幻片编辑</title>
+<link rel="stylesheet" type="text/css"href="${BASE_PATH}easyui/themes/gray/easyui.css"/>
+<link rel="stylesheet" type="text/css"href="${BASE_PATH}easyui/themes/icon.css"/>
+<link rel="stylesheet" type="text/css"href="${BASE_PATH}easyui/themes/gray/datagrid.css"/>
+<script type="text/javascript" src="${BASE_PATH}easyui/jquery.min.js"></script>
+<script type="text/javascript" src="${BASE_PATH}js/jquery.form.js"></script>
+<script type="text/javascript" src="${BASE_PATH}easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${BASE_PATH}easyui/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<style>
+body{background:#fff;}
+</style>
+<body>
+<script>
+$(function(){
+	$('#dg').datagrid({
+	    height: '100%',
+	    fit:true,
+	    url: '${BASE_PATH}admincon/allfly.html',
+	    method: 'POST',
+	    striped: true,
+	    nowrap: true,
+	    pageSize: 10,
+	    pageNumber:1, 
+	    pageList: [10, 20, 50, 100, 150, 200],
+		pagination : true,
+	    showFooter: true, 
+		loadMsg : '数据加载中请稍后……',
+	    toolbar:"#tb",
+	    singleSelect: false,
+		rownumbers:true,
+		columns: [[
+				    {field: 'ck', checkbox:true},
+				    {field: 'dy_name', title:'电影名称', width:250},
+				    {field: 'dy_type', title:'电影类型', width:150},
+				    {field: 'dy_title', title:'电影标题', width:150},
+				    {field: 'dy_bannerTj', title:'推荐滚动', width:150,formatter:function(res){
+				    	if(res=="1"||res==1){
+				    		return "推荐";
+				    	}else{
+				    		return "不推荐";
+				    	}
+				    }},
+				    {field: 'dy_firstTj', title:'推荐第一', width:150,formatter:function(res){
+				    	if(res=="1"||res==1){
+				    		return "推荐";
+				    	}else{
+				    		return "不推荐";
+				    	}
+				    }},
+				    {field: 'dy_createTime', title:'创建时间', width:150,formatter:fotmateDate}
+	    ]]
+	});
+});
+
+var numUrl = "";
+var neworup = "";
+$(function(){ 
+	$('#dyTabSel').combobox({
+	    onSelect: function(rec){
+	    	var valStr = $("#dy_tab").textbox("getValue");
+	    	if(valStr.indexOf(rec.id+",")>=0){
+	    		$.messager.alert('操作提示', "已有相同的标签", 'warning');
+	    		return false;
+	    	}else{
+	    		if(rec.id=="0"||rec.id==0){}else{
+	    			valStr += rec.id+",";
+	    			$("#dy_tab").textbox("setValue",valStr);
+	    		}
+	    	}
+	    }
+	});
+	
+	$('#dyTypeSel').combobox({
+	    onSelect: function(rec){
+	    	var valStr = $("#dy_type").textbox("getValue");
+	    	if(valStr.indexOf(rec.id+",")>=0){
+	    		$.messager.alert('操作提示', "已有相同的标签", 'warning');
+	    		return false;
+	    	}else{
+	    		if(rec.id=="0"||rec.id==0){}else{
+	    			valStr += rec.id+",";
+	    			$("#dy_type").textbox("setValue",valStr);
+	    		}
+	    	}
+	    	
+	    	if(rec.id=="9"||rec.id=="10"||rec.id=="11"||rec.id=="12"||rec.id=="13"||rec.id=="14"){
+	    		$("#fmTr2").css("display","table-row");
+	    	}
+	    }
+	});
+	
+	$("#idtypeBtn").click(function(){
+		$("#dy_type").textbox("setValue","");
+		$("#fmTr2").css("display","none");
+	});
+	
+	$("#idtabBtn").click(function(){
+		$("#dy_tab").textbox("setValue","");
+	});
+});
+
+function newMajor(){
+	resite();
+	$("input[name='model.dy_bannerTj'][value='0']").prop("checked",true);
+	$("input[name='model.dy_firstTj'][value='0']").prop("checked",true);
+	numUrl = "${BASE_PATH}admincon/addfly";
+	$('#dlg').dialog('open').dialog('setTitle','增加电影信息');
+	neworup = "1";
+}
+
+function update(){
+	resite();
+	var rows = $('#dg').datagrid('getChecked');	
+	if(rows.length<1||rows.length>1){
+		$.messager.alert('操作提示', "请选择一条数据！", 'warning');
+		return false;
+	}
+	$("input[name='model.dy_bannerTj'][value='0']").prop("checked",true);
+	$("input[name='model.dy_firstTj'][value='0']").prop("checked",true);
+	EasyUIload(rows[0]);
+	numUrl = "${BASE_PATH}admincon/updatefly";
+	$('#dlg').dialog('open').dialog('setTitle','修改电影信息');
+	neworup = "0";
+}
+
+function submitForm(){
+	if(checkData()){
+		$('#importfm').ajaxSubmit({  
+			url: numUrl,
+			dataType: 'text',
+			beforeSend:function(){$("#loadBox").show();},
+			complete:function(){$("#loadBox").hide();},
+			success: resutlMsg,
+			error: errorMsg
+		}); 
+		function resutlMsg(res){
+			res = JSON.parse(res);
+			if(res.msg==1){
+       			$('#dlg').dialog('close');
+           		$('#dg').datagrid('reload');
+           		$.messager.alert('操作提示', "数据保存成功！", 'info');
+       		}else{
+       			$.messager.alert('操作提示', "数据保存不成功！", 'warning');
+       		}
+		}
+		function errorMsg(){
+			$.messager.alert('操作提示', "导入excel出错！", 'warning');
+		}
+	}
+}
+
+function delet(){
+	var rows = $('#dg').datagrid('getChecked');
+	var idString = "";
+	for(var i=0; i<rows.length; i++){
+		idString += rows[i].id+",";
+	}
+	$.messager.confirm('删除提醒','确定删除选中的数据吗？',function(r){
+    	if (r){
+			$.post("${BASE_PATH}admincon/delet",{"idStr":idString.substring(0,idString.length-1)},function(res){
+				if(res.msg==0||res.msg=="0"){
+					$.messager.alert('操作提示', "删除失败！", 'warning');
+				}else{
+					$('#dg').datagrid('reload');
+				}
+			});
+    	}
+	});
+}
+
+//JS校验form表单信息
+function checkData(){
+	var fileDir = $("#dy_fm").filebox('getValue');
+	var suffix = fileDir.substr(fileDir.lastIndexOf("."));
+	
+	var fileDirBan = $("#dy_fmbanner").filebox('getValue');
+	var suffixBan = fileDirBan.substr(fileDirBan.lastIndexOf("."));
+	
+	var dy_type = $("#dy_type").textbox("getValue");
+	if("1"==neworup){
+		if("" == fileDir){
+			$.messager.alert('操作提示', "选择需要导入的小封面图片！", 'warning');
+			return false;
+		}
+		if(".jpg" != suffix && ".jpeg" != suffix && ".gif" != suffix && ".png" != suffix && ".bmp" != suffix ){
+			$.messager.alert('操作提示', "图片格式不支持，请重新选择！", 'warning');
+			return false;
+		}
+		
+		if(dy_type.indexOf("9,")>=0||dy_type.indexOf("10,")>=0||dy_type.indexOf("11,")>=0||dy_type.indexOf("12,")>=0||dy_type.indexOf("13,")>=0||dy_type.indexOf("14,")>=0){
+			if("" == fileDirBan){
+				$.messager.alert('操作提示', "选择需要导入的大封面图片！", 'warning');
+				return false;
+			}
+			if(".jpg" != suffixBan && ".jpeg" != suffixBan && ".gif" != suffixBan && ".png" != suffixBan && ".bmp" != suffixBan ){
+				$.messager.alert('操作提示', "图片格式不支持，请重新选择！", 'warning');
+				return false;
+			}	
+		}
+	}
+	return true;
+}
+
+function EasyUIload(jsondate){
+	for (var key in jsondate){
+		if(key=="dy_fm"){
+        	$("#show_fm").attr("src","${BASE_PATH}"+jsondate[key]);
+        }else if(key=="dy_fmBanner"){
+        	$("#show_fmbanner").attr("src","${BASE_PATH}"+jsondate[key]);
+        }else{
+        	$("#"+key).textbox('setValue',jsondate[key]);
+        }
+    }
+    
+    var textValue = $("#dy_type").textbox("getValue");
+    if(textValue.indexOf("9")>=0||textValue.indexOf("10")>=0||textValue.indexOf("11")>=0||textValue.indexOf("12")>=0||textValue.indexOf("13")>=0||textValue.indexOf("14")>=0){
+    	$("#fmTr2").css("display","table-row");
+    }
+}
+
+function resite(){
+	$("#id").textbox("setValue","");
+	$("#dy_name").textbox("setValue","");
+	$("#dy_type").textbox("setValue","");
+	$("#dy_tab").textbox("setValue","");
+	$("#dy_title").textbox("setValue","");
+	$("#dy_url").textbox("setValue","");
+	$("#dy_fm").filebox("setValue","");
+	$("#dy_fmbanner").filebox("setValue","");
+	$("#dy_info").textbox("setValue","");
+	$("#dy_mess").textbox("setValue","");
+}
+
+//格式化的方法
+function fotmateDate(value){
+	var dateStr = "";
+	if(value=="undefined"||value=="null"||value==null){}else{
+		var date = new Date(value);
+		dateStr = date.format("yyyy-MM-dd HH:mm:ss");
+	}
+    return dateStr;    
+}
+
+//js格式化日期插件代码
+Date.prototype.format = function (format) {  
+		 var o = {  
+		        "M+": this.getMonth() + 1, // month  
+		        "d+": this.getDate(), // day  
+		        "H+": this.getHours(), // hour  
+		        "m+": this.getMinutes(), // minute  
+		        "s+": this.getSeconds(), // second  
+		        "q+": Math.floor((this.getMonth() + 3) / 3), // quarter  
+		        "S": this.getMilliseconds()  
+		        // millisecond  
+		 }
+		 if (/(y+)/.test(format)){
+		        format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length)); 
+		 } 
+		 for (var k in o){  
+		      if (new RegExp("(" + k + ")").test(format)){
+		            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length)); 
+		 	  }
+		 } 
+		 return format;  
+}
+</script>
+<div>
+	<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="newMajor()">新增</a>
+	<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" onclick="delet()">删除</a>
+	<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" onclick="update()">修改</a>
+</div>
+<div style="width:100%; height:400px;">
+	<div id="dg" style="width:100%; height:100%;"></div>
+</div>
+
+<div id="dlg" class="easyui-dialog" style="width:520px; height:400px; padding: 10px 20px" closed="true" buttons="#dlg-buttons">
+	<form id="importfm" method="post"  enctype="multipart/form-data" novalidate >
+	<table cellspacing="5" style="font-size:13px;">
+		<tr style="display:none;">
+			<td colspan="3"><input type="text" id="id" name="model.id" class="easyui-textbox"/></td>
+		</tr>
+		<tr>
+			<td><label>电影名称：</label></td>
+			<td colspan="2"><input type="text" id="dy_name" name="model.dy_name" class="easyui-textbox" style="width:250px;"/></td>
+		</tr>
+		<tr>
+			<td><label>电影类型：</label></td>
+			<td><input type="text" id="dy_type" name="model.dy_type" class="easyui-textbox" readonly style="width:225px;"/>
+				<input id="idtypeBtn" type="button" value="X" title="清空" style="color:#999; border-radius:5px; border:1px solid #D3D3D3; background:#fff; outline:none; padding:2px 7px; cursor: pointer; float:right;"></td>
+			<td>
+				<select id="dyTypeSel" class="easyui-combobox" data-options="panelHeight:'auto',valueField: 'id', textField: 'value',
+					data: [{
+						id: '0',
+						value: '==请选择==',
+						selected:true
+					},{
+						id: '1',
+						value: '科幻片'
+					},{
+						id: '2',
+						value: '灾难片'
+					},{
+						id: '3',
+						value: '动作片'
+					},{
+						id: '4',
+						value: '喜剧片'
+					},{
+						id: '5',
+						value: '恐怖片'
+					},{
+						id: '6',
+						value: '爱情片'
+					},{
+						id: '7',
+						value: '悬疑片'
+					},{
+						id: '8',
+						value: '动漫片'
+					},{
+						id: '9',
+						value: '首页轮播模块'
+					},{
+						id: '10',
+						value: '首页大片模块'
+					},{
+						id: '11',
+						value: '首页好莱坞模块'
+					},{
+						id: '12',
+						value: '首页科幻模块'
+					},{
+						id: '13',
+						value: '首页最新模块'
+					},{
+						id: '14',
+						value: '首页热门模块'
+					}]" style="width:100px;">
+				</select>
+			</td>
+		</tr>
+		<!-- <tr>
+			<td><label>推荐滚动：</label></td>
+			<td><input type="radio" name="model.dy_bannerTj" value="1"/>推荐</td>
+			<td><input type="radio" name="model.dy_bannerTj" value="0"/>不推荐</td>
+		</tr>
+		<tr>
+			<td><label>推荐电影：</label></td>
+			<td><input type="radio" name="model.dy_firstTj" value="1"/>推荐</td>
+			<td><input type="radio" name="model.dy_firstTj" value="0"/>不推荐</td>
+		</tr> -->
+		<tr>
+			<td><label>电影标签：</label></td>
+			<td><input type="text" id="dy_tab" name="model.dy_tab" class="easyui-textbox" readonly style="width:225px;"/>
+				<input id="idtabBtn" type="button" value="X" title="清空" style="color:#999; border-radius:5px; border:1px solid #D3D3D3; background:#fff; outline:none; padding:2px 7px; cursor: pointer; float:right;">
+			</td>
+			<td>
+				<select id="dyTabSel" class="easyui-combobox" data-options="panelHeight:'auto',valueField:'id',textField:'tabName',url:'${BASE_PATH}adminTab/TabList'" style="width:100px;"></select>
+			</td>
+		</tr>
+		<tr>
+			<td><label>描述标题：</label></td>
+			<td colspan="2"><input type="text" id="dy_title" name="model.dy_title" class="easyui-textbox" style="width:250px;"/></td>
+		</tr>
+		<tr>
+			<td><label>下载地址：</label></td>
+			<td colspan="2"><input type="text" id="dy_url" name="model.dy_url" class="easyui-textbox" style="width:250px;"/></td>
+		</tr>
+		<tr>
+			<td><label><div>封　　面：</div><div style="color:#ff0000; font-size:12px;">340*540</div></label></td>
+			<td><input name="model.dy_fm" id="dy_fm" data-options="prompt:'请选择上传图片',buttonText:'&nbsp;选&nbsp;择&nbsp;'" class="easyui-filebox" style="width:250px;"/></td>
+			<td><img id="show_fm" src="" style="width:50px; height:50px;"/></td>
+		</tr>
+		<tr id="fmTr2" style="display:none;">
+			<td><label><div>封　　面：</div><div style="color:#ff0000; font-size:12px;">1080*540</div></label></td>
+			<td><input name="model.dy_fmBanner" id="dy_fmbanner" data-options="prompt:'请选择上传图片',buttonText:'&nbsp;选&nbsp;择&nbsp;'" class="easyui-filebox" style="width:250px;"/></td>
+			<td><img id="show_fmbanner" src="" style="width:50px; height:50px;"/></td>
+		</tr>
+		<tr>
+			<td style="vertical-align: baseline;"><label>简短描述：</label></td>
+			<td colspan="2"><input type="text" id="dy_info" name="model.dy_info" class="easyui-textbox" data-options="multiline:true" style="width:320px; height:100px"/></td>
+		</tr>
+		<tr>
+			<td style="vertical-align: baseline;"><label>剧情介绍：</label></td>
+			<td colspan="2"><input type="text" id="dy_mess" name="model.dy_mess" class="easyui-textbox" data-options="multiline:true" style="width:320px; height:200px"/></td>
+		</tr>
+	</table>
+	</form>
+</div>
+<div id="dlg-buttons">
+	<a href="javascript:void(0)" class="easyui-linkbutton" id="saveBean" iconCls="icon-ok" onclick="submitForm()" style="displaly:block;width: 90px">保存</a> 
+	<a href="javascript:void(0)" class="easyui-linkbutton" id="saveCancel" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
+</div>
+</body>
+</html>
