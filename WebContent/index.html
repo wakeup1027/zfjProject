@@ -69,14 +69,13 @@ $(function(){
 	<ul class="ulclassStype" style="width:1100px; overflow:hidden; list-style-type:none; margin:0px auto 0px auto; padding:0px; background:url(${BASE_PATH}images/menu_bg.jpg);">
 		<li id="chooseMenu" style="background:#101A25;"><a href="${BASE_PATH}page/index.html">纸飞机</a></li>
 		<li><a href="${BASE_PATH}page/kehuan.html">科幻片</a></li>
-		<li><a>灾难片</a></li>
-		<li><a>动作片</a></li>
-		<li><a>喜剧片</a></li>
-		<li><a>悬疑片</a></li>
-		<li><a>恐怖片</a></li>
-		<li><a>战争片</a></li>
-		<li><a>爱情片</a></li>
-		<li><a>动画片</a></li>
+		<li><a href="${BASE_PATH}page/zainan.html">灾难片</a></li>
+		<li><a href="${BASE_PATH}page/dongzuo.html">动作片</a></li>
+		<li><a href="${BASE_PATH}page/xiju.html">喜剧片</a></li>
+		<li><a href="${BASE_PATH}page/xuanyi.html">悬疑片</a></li>
+		<li><a href="${BASE_PATH}page/kongbu.html">恐怖片</a></li>
+		<li><a href="${BASE_PATH}page/aiqing.html">爱情片</a></li>
+		<li><a href="${BASE_PATH}page/donghua.html">动画片</a></li>
 	</ul>
 	<div style="clear:both;"></div>
 	<div id="firstButtom" style="position:absolute; border-bottom:3px solid #D00060; top:147px; width:80px; z-index:1;"></div>
@@ -94,11 +93,23 @@ $(function(){
 	  		<img src="${BASE_PATH}images/fm0.png" style="width:100%; font-size:0"/>
 	  		<div style="background:rgba(0,0,0,0.4); color:#fff; line-height:40px; margin-top: -40px; position: relative; font-size: 15px; padding-left: 10px;">童话世界的成人法则</div>
 	  	</div>
+	  	<div class="swiper-slide blue-slide">
+	  		<img src="${BASE_PATH}images/fm0.png" style="width:100%; font-size:0"/>
+	  		<div style="background:rgba(0,0,0,0.4); color:#fff; line-height:40px; margin-top: -40px; position: relative; font-size: 15px; padding-left: 10px;">童话世界的成人法则</div>
+	  	</div>
+	  	<div class="swiper-slide blue-slide">
+	  		<img src="${BASE_PATH}images/fm0.png" style="width:100%; font-size:0"/>
+	  		<div style="background:rgba(0,0,0,0.4); color:#fff; line-height:40px; margin-top: -40px; position: relative; font-size: 15px; padding-left: 10px;">童话世界的成人法则</div>
+	  	</div>
+	  	<div class="swiper-slide blue-slide">
+	  		<img src="${BASE_PATH}images/fm0.png" style="width:100%; font-size:0"/>
+	  		<div style="background:rgba(0,0,0,0.4); color:#fff; line-height:40px; margin-top: -40px; position: relative; font-size: 15px; padding-left: 10px;">童话世界的成人法则</div>
+	  	</div>
 	  </div>
 	  <div class="swiper-pagination"></div>
-	  <!-- 如果需要导航按钮 
-    <div class="swiper-button-prev swiper-button-white"></div>
-    <div class="swiper-button-next swiper-button-white"></div>-->
+	  <!-- 如果需要导航按钮 -->
+      <div class="swiper-button-prev swiper-button-white"></div>
+      <div class="swiper-button-next swiper-button-white"></div>
 	</div>
 </div>
 
@@ -346,12 +357,10 @@ var mySwiper = new Swiper('.swiper-container',{
 	autoplay: 3000,
 	autoplayDisableOnInteraction: false,
 	pagination: '.swiper-pagination',
+	nextButton: '.swiper-button-next',
+    prevButton: '.swiper-button-prev',
 	paginationClickable: true
 });
-/*
-    nextButton: '.swiper-button-next',
-    prevButton: '.swiper-button-prev',
-*/
 </script>
 </body>
 </html>
