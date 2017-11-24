@@ -11,6 +11,7 @@ import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.render.ViewType;
 import com.jfinal.template.Engine;
 import com.tool.DateUtils;
+import com.tool.StringUtils;
 import com.config.HtmlHandler;
 import com.config.BasePathHandler;
 import com.config.AutoBindModels;
@@ -29,7 +30,8 @@ public class DemoConfig extends JFinalConfig{
 		
 		// 获取GroupTemplate ,可以设置共享变量等操作  作用是在渲染界面的时候如果出现界面中的方法 也可以执行
 		GroupTemplate groupTemplate = rf.groupTemplate;
-		groupTemplate.registerFunctionPackage("flyfox", DateUtils.class);
+		groupTemplate.registerFunctionPackage("DateUtils", DateUtils.class);
+		groupTemplate.registerFunctionPackage("StringUtils", StringUtils.class);
 	}
 
 	@Override

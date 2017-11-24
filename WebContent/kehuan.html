@@ -10,7 +10,7 @@
 .ulclassStype li{color:#fff; display:block; float:left; text-align:center; line-height:50px; width:80px;}
 .ulclassStype li:hover{background:#101A25; cursor:pointer;}
 .ulclassStype li a{display:block; text-decoration:none; color:#FFFFFF;}
-.aClass{display:block; float:left; width:173px; height:300px; border:1px solid #E9E9E9; margin-left:10px; margin-top:15px; cursor:pointer; overflow:hidden; color:#333; font-size:13px;}
+.aClass{display:block; float:left; width:173px; height:300px; border:1px solid #E9E9E9; margin-left:10px; margin-top:15px; cursor:pointer; overflow:hidden; color:#333; font-size:13px;border-radius: 5px;}
 .aClass:hover{border:1px solid #D00060;}
 .aClass:nth-child(6n+1){ margin-left:0px; }
 .aClass .dyImg{width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; }
@@ -29,22 +29,29 @@ $(function(){
 	});
 	
 	var date = [];
-	for(var i=0; i<371; i++){
-		date.push(FormJson("${BASE_PATH}images/fm9.png","机械公敌_"+(i+1),"2017","欧美","科幻,惊悚"));
-	}
-	//console.log(date);
-		
-    $("#pagerArea").cypager({pg_size: 30, pg_nav_count: 8, pg_total_count: date.length, pg_call_fun: function(count) {
+	var coutPage=30; //一页显示的数据数
+	
+	<% if( moviedate != null && moviedate.~size > 0 ){ %>
+		<% for(item in moviedate){ %>
+				date.push(FormJson("${BASE_PATH+item.dy_fm}","${item.dy_name}","${StringUtils.NameString(item.dy_createTime)}","","${StringUtils.TypeString(item.dy_tab,dyTab)}"));
+		<%}
+	}%>
+	
+    $("#pagerArea").cypager({pg_size: coutPage, pg_nav_count: 8, pg_total_count: date.length, pg_call_fun: function(count) {
 		$("#contentBox").html("");
-		for(var j=(count-1)*30; j<count*30; j++){
+		for(var j=(count-1)*coutPage; j<count*coutPage; j++){
 			if(j<date.length){
-				var ali = '<a class="aClass"><div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url('+date[j].imgUrl+');"></div><div style="width:168px; height:auto; padding-left:5px;"><div style="line-height:25px; text-align:left; color:#444;">'+date[j].title+'</div><div style="line-height:25px; text-align:left; color:#999;">'+date[j].createTime+' '+date[j].country+' '+date[j].dyType+'</div></div></a>';
+				var ali = '<a class="aClass"><div class="dyImg" style="background:url('+date[j].imgUrl+'); background-repeat: no-repeat; background-size: 173px 250px;"></div><div class="dyInfoBox"><div class="dyTitle">'+date[j].title+'</div><div class="dyInfo">'+date[j].createTime+' '+date[j].dyType+'</div></div></a>';
 				$("#contentBox").append(ali);
 			}
 		}
     }});
 });
 		
+function belongTime(str){
+	return str.substring(0,4);
+}
+
 function FormJson(imgUrl,title,createTime,country,dyType){
 	var jsonFrom = {};
 	jsonFrom.imgUrl=imgUrl;
@@ -97,216 +104,25 @@ function FormJson(imgUrl,title,createTime,country,dyType){
 <!--conter-->
 <div style="width:100%; height:auto;">
 	<div id="contentBox" style="width:1100px; margin-left:auto; margin-right:auto; height:auto; overflow:auto;">
-		<a class="aClass">
-			<div class="dyImg" style="background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div class="dyInfoBox">
-				<div class="dyTitle">机械公敌</div>
-				<div class="dyInfo">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">机械公敌</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
+	<%if(moviedate!=null&&moviedate.~size>0){
+		var i=0;
+		for(item in moviedate){
+			if(i<30){
+			%>
+			<a class="aClass">
+				<div class="dyImg" style="background:url(${BASE_PATH+item.dy_fm}); background-repeat: no-repeat; background-size: 173px 250px;"></div>
+				<div class="dyInfoBox">
+					<div class="dyTitle">${item.dy_name}</div>
+					<div class="dyInfo">${StringUtils.NameString(item.dy_createTime)} ${StringUtils.TypeString(item.dy_tab,dyTab)}</div>
+				</div>
+			</a>
+			<%
+			}else{
+				break;
+			}
+			i++;
+		}
+	}%>
 	</div>
 	<div id="pagerArea" unselectable="on" onselectstart="return false;" style="-moz-user-select:none; margin-top:30px;"></div>
 </div>
