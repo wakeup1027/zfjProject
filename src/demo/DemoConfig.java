@@ -21,7 +21,7 @@ public class DemoConfig extends JFinalConfig{
 
 	@Override
 	public void configConstant(Constants me) {
-		me.setDevMode(true);
+		me.setDevMode(true); //这个是对controller操作的时候打印到控制台上
 		//设置解析渲染html的工厂
 		me.setViewType(ViewType.JSP); // 设置视图类型为Jsp，否则默认为FreeMarker
 		JFinal3BeetlRenderFactory rf = new JFinal3BeetlRenderFactory();
@@ -62,16 +62,7 @@ public class DemoConfig extends JFinalConfig{
 	@Override
 	public void configPlugin(Plugins me) {
 		//用来操作连接数据库的连接池的方法
-		//String db_type = "mysql.";
-
-		//String webRoot = PathKit.getWebRootPath();
-		//D:\RDtekcit\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\jfinal_cms
-		//String DBPath = webRoot + "\\WEB-INF\\";
-		//D:\RDtekcit\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\jfinal_cms\WEB-INF\
-		//DBPath = StrUtils.replace(DBPath, "\\", "/");
-		//D:/RDtekcit/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/jfinal_cms/WEB-INF/
 		String jdbcUrl = "jdbc:mysql://127.0.0.1:3306/zfjDate?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull";
-		//jdbc:mysql://127.0.0.1:3306/jfinal_cms?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
 
 		C3p0Plugin c3p0Plugin = new C3p0Plugin(jdbcUrl, "root", "123456", "com.mysql.jdbc.Driver");
 		me.add(c3p0Plugin);
@@ -79,7 +70,7 @@ public class DemoConfig extends JFinalConfig{
 		// 配置ActiveRecord插件
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
 		me.add(arp);
-		arp.setShowSql(true);
+		arp.setShowSql(true); //这个是对数据库操作的时候打印到控制台上
 
 		new AutoBindModels(arp);
 	}

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>爱情片专栏</title>
+<title>动画片专栏</title>
 <link rel="stylesheet" href="${BASE_PATH}css/cypager.min.css" />
 <script type="text/javascript" src="${BASE_PATH}js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="${BASE_PATH}js/cypager.min.js" charset="gb2312"></script>
@@ -10,8 +10,8 @@
 .ulclassStype li{color:#fff; display:block; float:left; text-align:center; line-height:50px; width:80px;}
 .ulclassStype li:hover{background:#101A25; cursor:pointer;}
 .ulclassStype li a{display:block; text-decoration:none; color:#FFFFFF;}
-.aClass{display:block; float:left; width:173px; height:300px; border:1px solid #E9E9E9; margin-left:10px; margin-top:15px; cursor:pointer; overflow:hidden; color:#333; font-size:13px;}
-.aClass:hover{border:1px solid #D00060;}
+.aClass{display:block; float:left; width:173px; height:300px; border:1px solid #E9E9E9; margin-left:10px; margin-top:15px; cursor:pointer; overflow:hidden; color:#333; font-size:13px;border-radius: 5px;}
+.aClass:hover{box-shadow: 1px 2px 10px 0px #666;}
 .aClass:nth-child(6n+1){ margin-left:0px; }
 .aClass .dyImg{width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; }
 .aClass .dyInfoBox{width:168px; height:auto; padding-left:5px;}
@@ -20,6 +20,7 @@
 </style>
 <script>
 $(function(){
+	//alert($("#chooseMenu").offset().left);
 	$("#firstButtom").css("left",$("#chooseMenu").offset().left);
 	$(".ulclassStype li").mouseover(function(){
 	 	$("#menubuttom").css("left",$(this).offset().left);
@@ -29,24 +30,32 @@ $(function(){
 	});
 	
 	var date = [];
-	for(var i=0; i<371; i++){
-		date.push(FormJson("${BASE_PATH}images/fm9.png","怦然心动_"+(i+1),"2017","欧美","科幻,惊悚"));
-	}
-	//console.log(date);
+	var coutPage=30; //一页显示的数据数
+	
+	<% if( moviedate != null && moviedate.~size > 0 ){ %>
+		<% for(item in moviedate){ %>
+				date.push(FormJson("${item.parentId}","${BASE_PATH+item.dy_fm}","${item.dy_name}","${StringUtils.NameString(item.dy_createTime)}","","${StringUtils.TypeString(item.dy_tab,dyTab)}"));
+		<%}
+	}%>
 		
-    $("#pagerArea").cypager({pg_size: 30, pg_nav_count: 8, pg_total_count: date.length, pg_call_fun: function(count) {
+    $("#pagerArea").cypager({pg_size: coutPage, pg_nav_count: 8, pg_total_count: date.length, pg_call_fun: function(count) {
 		$("#contentBox").html("");
-		for(var j=(count-1)*30; j<count*30; j++){
+		for(var j=(count-1)*coutPage; j<count*coutPage; j++){
 			if(j<date.length){
-				var ali = '<a class="aClass"><div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url('+date[j].imgUrl+');"></div><div style="width:168px; height:auto; padding-left:5px;"><div style="line-height:25px; text-align:left; color:#444;">'+date[j].title+'</div><div style="line-height:25px; text-align:left; color:#999;">'+date[j].createTime+' '+date[j].country+' '+date[j].dyType+'</div></div></a>';
+				var ali = '<div class="aClass" onclick="details('+date[j].id+')"><div class="dyImg" style="background:url('+date[j].imgUrl+'); background-repeat: no-repeat; background-size: 173px 250px;"></div><div class="dyInfoBox"><div class="dyTitle">'+date[j].title+'</div><div class="dyInfo">'+date[j].createTime+' '+date[j].dyType+'</div></div></div>';
 				$("#contentBox").append(ali);
 			}
 		}
     }});
 });
+
+function belongTime(str){
+	return str.substring(0,4);
+}
 		
-function FormJson(imgUrl,title,createTime,country,dyType){
+function FormJson(id,imgUrl,title,createTime,country,dyType){
 	var jsonFrom = {};
+	jsonFrom.id=id;
 	jsonFrom.imgUrl=imgUrl;
 	jsonFrom.title=title;
 	jsonFrom.createTime=createTime;
@@ -58,9 +67,8 @@ function FormJson(imgUrl,title,createTime,country,dyType){
 </script>
 </head>
 
-<body>
 <!-- logo -->
-<body style="padding:0px; margin:0px; font-family:'微软雅黑'; padding-bottom: 20px;">
+<body style="padding:0px; margin:0px; font-family:'微软雅黑'; padding-bottom:20px;">
 <div style="height:100px; width:100%;">
 	<div style="margin-left:auto; margin-right:auto; width:1100px; height:80px;">
 		<div style="float:left; width:310px; height:100%; background:url(${BASE_PATH}images/logo.png) no-repeat; margin-top:10px;"></div>
@@ -78,7 +86,7 @@ function FormJson(imgUrl,title,createTime,country,dyType){
 
 <!-- menu -->
 <div style="width:100%; height:50px; width:100%; background-color:#364153;">
-	<ul class="ulclassStype" style="width:1100px; overflow:hidden; list-style-type:none; margin:0px auto 0px auto; padding:0px; background:url(${BASE_PATH}images/menu_bg.jpg);">
+	<ul class="ulclassStype" style="width:1120px; overflow:hidden; list-style-type:none; margin:0px auto 0px auto; padding:0px; background:url(${BASE_PATH}images/menu_bg.jpg);">
 		<li><a href="${BASE_PATH}page/index.html">纸飞机</a></li>
 		<li><a href="${BASE_PATH}page/kehuan.html">科幻片</a></li>
 		<li><a href="${BASE_PATH}page/zainan.html">灾难片</a></li>
@@ -96,217 +104,26 @@ function FormJson(imgUrl,title,createTime,country,dyType){
 
 <!--conter-->
 <div style="width:100%; height:auto;">
-	<div id="contentBox" style="width:1100px; margin-left:auto; margin-right:auto; height:auto; overflow:auto;">
-		<a class="aClass">
-			<div class="dyImg" style="background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div class="dyInfoBox">
-				<div class="dyTitle">怦然心动</div>
-				<div class="dyInfo">2017 欧美 科幻,惊悚</div>
+	<div id="contentBox" style="width:1100px; margin-left:auto; margin-right:auto; height:auto; overflow:auto; padding-bottom: 20px;padding-right: 20px;">
+	<%if(moviedate!=null&&moviedate.~size>0){
+		var i=0;
+		for(item in moviedate){
+			if(i<30){
+			%>
+			<div class="aClass" onclick="details(${item.parentId})">
+				<div class="dyImg" style="background:url(${BASE_PATH+item.dy_fm}); background-repeat: no-repeat; background-size: 173px 250px;"></div>
+				<div class="dyInfoBox">
+					<div class="dyTitle">${item.dy_name}</div>
+					<div class="dyInfo">${StringUtils.NameString(item.dy_createTime)} ${StringUtils.TypeString(item.dy_tab,dyTab)}</div>
+				</div>
 			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
-		<a class="aClass">
-			<div style="width:100%; height:249px; border-bottom:#e9e9e9 solid 1px; background:url(${BASE_PATH}images/fm9.png);"></div>
-			<div style="width:168px; height:auto; padding-left:5px;">
-				<div style="line-height:25px; text-align:left; color:#444;">怦然心动</div>
-				<div style="line-height:25px; text-align:left; color:#999;">2017 欧美 科幻,惊悚</div>
-			</div>
-		</a>
+			<%
+			}else{
+				break;
+			}
+			i++;
+		}
+	}%>
 	</div>
 	<div id="pagerArea" unselectable="on" onselectstart="return false;" style="-moz-user-select:none; margin-top:30px;"></div>
 </div>
@@ -320,5 +137,10 @@ function FormJson(imgUrl,title,createTime,country,dyType){
 		国家广播电影电视总局电影卫星频道节目制作中心 版权所有
 	</div>
 </div>
+<script>
+function details(value){
+	window.open("${BASE_PATH}page/details.html?moivesign="+value);
+}
+</script>
 </body>
 </html>

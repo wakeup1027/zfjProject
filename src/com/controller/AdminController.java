@@ -44,12 +44,23 @@ public class AdminController extends Controller{
         	isHas.mkdir();
         }
         UploadFile file = getFile("model.dy_fm"); 
-        UploadFile fileBanner = getFile("model.dy_fmbanner");
-        String fmUrl = new AllUntil().upImages(file, path);
-        String fmUrlBanner = new AllUntil().upImages(fileBanner, path);
+        UploadFile fileBanner = getFile("model.dy_fmBanner");
         DyTable model = getModel(DyTable.class,"model");
-		model.set("dy_fm", fmUrl);
-		model.set("dy_fmBanner", fmUrlBanner);
+        
+        if(null==file){
+        	model.remove("dy_fm");
+        }else{
+        	String fmUrl = new AllUntil().upImages(file, path);
+        	model.set("dy_fm", fmUrl);
+        }
+        
+        if(null==fileBanner){
+        	model.remove("dy_fmBanner");
+        }else{
+        	String fmUrlBanner = new AllUntil().upImages(fileBanner, path);
+        	model.set("dy_fmBanner", fmUrlBanner);
+        }
+        
 		model.set("dy_createTime", DateUtils.getNow(DateUtils.DEFAULT_REGEX_YYYY_MM_DD_HH_MIN_SS));
 		if(model.save()){
 			json.put("msg", 1);
@@ -109,4 +120,32 @@ public class AdminController extends Controller{
 		renderJson(json);
 	}
 	
+	/**
+	 * 富文本编辑器图片上传
+	 */
+	public void uploadImage() {      
+		UploadFile uf = getFile("upfile");
+		String fileName = uf.getFileName();
+		String data = "{\"errno\": 0,\"data\": [\"/zfjService/upload/"+fileName+"\"]}";
+		JSONObject jsonObject = JSONObject.fromObject(data);   
+		renderJson(jsonObject);
+    }
+	
+	/**
+	 * 手机端测试
+	 */
+	public void phoneUpFly(){
+		JSONObject json = new JSONObject(); 
+		String path = getSession().getServletContext().getRealPath("upload");  
+		System.out.println("修改电影数据（封面上传路径）："+path);
+		File isHas = new File(path);
+        if(!isHas.exists()){
+        	isHas.mkdir();
+        }
+        UploadFile file = getFile("model.dy_fm");
+       	String fmUrl = new AllUntil().upImages(file, path);
+        System.out.println(fmUrl);
+        json.put("ke", 1);
+        renderJson(json);
+	}
 }

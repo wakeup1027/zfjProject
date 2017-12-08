@@ -7,6 +7,7 @@ import com.bean.DyBanner;
 import com.bean.DyDapianHome;
 import com.bean.DyDongman;
 import com.bean.DyDongzuo;
+import com.bean.DyDownNum;
 import com.bean.DyHollywoodHome;
 import com.bean.DyKehuan;
 import com.bean.DyKehuanHome;
@@ -60,6 +61,7 @@ public class DySortController extends Controller{
 			dyKehuanHome.set("dy_createTime", dt_table.getStr("dy_createTime"));
 			dyKehuanHome.set("dy_firstTj", dt_table.getInt("dy_firstTj"));
 			dyKehuanHome.set("dy_bannerTj", dt_table.getInt("dy_bannerTj"));
+			dyKehuanHome.set("parentId", dt_table.getInt("id"));
 			dyKehuanHome.save();
 		}
 		
@@ -79,6 +81,7 @@ public class DySortController extends Controller{
 			dyDapianHome.set("dy_createTime", dt_table.getStr("dy_createTime"));
 			dyDapianHome.set("dy_firstTj", dt_table.getInt("dy_firstTj"));
 			dyDapianHome.set("dy_bannerTj", dt_table.getInt("dy_bannerTj"));
+			dyDapianHome.set("parentId", dt_table.getInt("id"));
 			dyDapianHome.save();
 		}
 		
@@ -98,6 +101,7 @@ public class DySortController extends Controller{
 			dyHollywoodHome.set("dy_createTime", dt_table.getStr("dy_createTime"));
 			dyHollywoodHome.set("dy_firstTj", dt_table.getInt("dy_firstTj"));
 			dyHollywoodHome.set("dy_bannerTj", dt_table.getInt("dy_bannerTj"));
+			dyHollywoodHome.set("parentId", dt_table.getInt("id"));
 			dyHollywoodHome.save();
 		}
 		
@@ -117,6 +121,7 @@ public class DySortController extends Controller{
 			dynew.set("dy_createTime", dt_table.getStr("dy_createTime"));
 			dynew.set("dy_firstTj", dt_table.getInt("dy_firstTj"));
 			dynew.set("dy_bannerTj", dt_table.getInt("dy_bannerTj"));
+			dynew.set("parentId", dt_table.getInt("id"));
 			dynew.save();
 		}
 		
@@ -136,6 +141,7 @@ public class DySortController extends Controller{
 			dyRemen.set("dy_createTime", dt_table.getStr("dy_createTime"));
 			dyRemen.set("dy_firstTj", dt_table.getInt("dy_firstTj"));
 			dyRemen.set("dy_bannerTj", dt_table.getInt("dy_bannerTj"));
+			dyRemen.set("parentId", dt_table.getInt("id"));
 			dyRemen.save();
 		}
 		
@@ -155,6 +161,7 @@ public class DySortController extends Controller{
 			dyAiqing.set("dy_createTime", dt_table.getStr("dy_createTime"));
 			dyAiqing.set("dy_firstTj", dt_table.getInt("dy_firstTj"));
 			dyAiqing.set("dy_bannerTj", dt_table.getInt("dy_bannerTj"));
+			dyAiqing.set("parentId", dt_table.getInt("id"));
 			dyAiqing.save();
 		}
 		
@@ -174,6 +181,7 @@ public class DySortController extends Controller{
 			dyBanner.set("dy_createTime", dt_table.getStr("dy_createTime"));
 			dyBanner.set("dy_firstTj", dt_table.getInt("dy_firstTj"));
 			dyBanner.set("dy_bannerTj", dt_table.getInt("dy_bannerTj"));
+			dyBanner.set("parentId", dt_table.getInt("id"));
 			dyBanner.save();
 		}
 		
@@ -193,6 +201,7 @@ public class DySortController extends Controller{
 			dyDongman.set("dy_createTime", dt_table.getStr("dy_createTime"));
 			dyDongman.set("dy_firstTj", dt_table.getInt("dy_firstTj"));
 			dyDongman.set("dy_bannerTj", dt_table.getInt("dy_bannerTj"));
+			dyDongman.set("parentId", dt_table.getInt("id"));
 			dyDongman.save();
 		}
 		
@@ -212,6 +221,7 @@ public class DySortController extends Controller{
 			dyDongzuo.set("dy_createTime", dt_table.getStr("dy_createTime"));
 			dyDongzuo.set("dy_firstTj", dt_table.getInt("dy_firstTj"));
 			dyDongzuo.set("dy_bannerTj", dt_table.getInt("dy_bannerTj"));
+			dyDongzuo.set("parentId", dt_table.getInt("id"));
 			dyDongzuo.save();
 		}
 		
@@ -230,6 +240,7 @@ public class DySortController extends Controller{
 			dyKehuan.set("dy_createTime", dt_table.getStr("dy_createTime"));
 			dyKehuan.set("dy_firstTj", dt_table.getInt("dy_firstTj"));
 			dyKehuan.set("dy_bannerTj", dt_table.getInt("dy_bannerTj"));
+			dyKehuan.set("parentId", dt_table.getInt("id"));
 			dyKehuan.save();
 		}
 		
@@ -249,6 +260,7 @@ public class DySortController extends Controller{
 			dyKongbu.set("dy_createTime", dt_table.getStr("dy_createTime"));
 			dyKongbu.set("dy_firstTj", dt_table.getInt("dy_firstTj"));
 			dyKongbu.set("dy_bannerTj", dt_table.getInt("dy_bannerTj"));
+			dyKongbu.set("parentId", dt_table.getInt("id"));
 			dyKongbu.save();
 		}
 		
@@ -268,6 +280,7 @@ public class DySortController extends Controller{
 			dyXiju.set("dy_createTime", dt_table.getStr("dy_createTime"));
 			dyXiju.set("dy_firstTj", dt_table.getInt("dy_firstTj"));
 			dyXiju.set("dy_bannerTj", dt_table.getInt("dy_bannerTj"));
+			dyXiju.set("parentId", dt_table.getInt("id"));
 			dyXiju.save();
 		}
 		
@@ -287,6 +300,7 @@ public class DySortController extends Controller{
 			dyXuanyi.set("dy_createTime", dt_table.getStr("dy_createTime"));
 			dyXuanyi.set("dy_firstTj", dt_table.getInt("dy_firstTj"));
 			dyXuanyi.set("dy_bannerTj", dt_table.getInt("dy_bannerTj"));
+			dyXuanyi.set("parentId", dt_table.getInt("id"));
 			dyXuanyi.save();
 		}
 		
@@ -306,7 +320,29 @@ public class DySortController extends Controller{
 			dyZainan.set("dy_createTime", dt_table.getStr("dy_createTime"));
 			dyZainan.set("dy_firstTj", dt_table.getInt("dy_firstTj"));
 			dyZainan.set("dy_bannerTj", dt_table.getInt("dy_bannerTj"));
+			dyZainan.set("parentId", dt_table.getInt("id"));
 			dyZainan.save();
+		}
+		
+		//下载次数排行榜
+		List<DyTable> dy_downNumList = DyTable.dao.find("SELECT * FROM dytable ORDER BY downNum DESC LIMIT 30");
+		for(DyTable dt_table : dy_downNumList){
+			DyDownNum dyDownNum = new DyDownNum();
+			dyDownNum.set("dy_name", dt_table.getStr("dy_name"));
+			dyDownNum.set("dy_title", dt_table.getStr("dy_title"));
+			dyDownNum.set("dy_type", dt_table.getStr("dy_type"));
+			dyDownNum.set("dy_fm", dt_table.getStr("dy_fm"));
+			dyDownNum.set("dy_fmBanner", dt_table.getStr("dy_fmBanner"));
+			dyDownNum.set("dy_url", dt_table.getStr("dy_url"));
+			dyDownNum.set("dy_info", dt_table.getStr("dy_info"));
+			dyDownNum.set("dy_mess", dt_table.getStr("dy_mess"));
+			dyDownNum.set("dy_tab", dt_table.getStr("dy_tab"));
+			dyDownNum.set("dy_createTime", dt_table.getStr("dy_createTime"));
+			dyDownNum.set("dy_firstTj", dt_table.getInt("dy_firstTj"));
+			dyDownNum.set("dy_bannerTj", dt_table.getInt("dy_bannerTj"));
+			dyDownNum.set("downNum", dt_table.getInt("downNum"));
+			dyDownNum.set("parentId", dt_table.getInt("id"));
+			dyDownNum.save();
 		}
 		
 		renderJson("{\"status\":\"归类完成！\"}");

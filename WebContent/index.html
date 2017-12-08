@@ -9,19 +9,17 @@
 .ulclassStype li{color:#fff; display:block; float:left; text-align:center; line-height:50px; width:80px;}
 .ulclassStype li:hover{background:#101A25; cursor:pointer;}
 .ulclassStype li a{display:block; text-decoration:none; color:#FFFFFF;}
-.todayDy{margin-left:10px; height:100%; width:200px; float:left; background:url(${BASE_PATH}images/fm4.png);cursor:pointer;}
-.todayDy .styName{ margin-top:115px;}
-.todayFirst .styName{ margin-top:270px;}
-.totherClass{cursor:pointer;}
-.styName{ font-size:12px; text-align:center; margin-top:270px; background:rgba(0,0,0,0.5); line-height:30px; color:#FFFFFF;}
-.kehuanStyle{ width:204px; height:300px; float:left; background:url(${BASE_PATH}images/fm7.png); margin-left:20px;}
-.kehuanStyle:first-child{ margin-left:0px;}
-.zainanStyle{ width:204px; height:300px; float:left; background:url(${BASE_PATH}images/fm6.png); margin-left:20px;}
-.zainanStyle:first-child{ margin-left:0px;}
-.dongzuoStyle{ width:204px; height:300px; float:left; background:url(${BASE_PATH}images/fm1.png); margin-left:20px;}
-.dongzuoStyle:first-child{ margin-left:0px;}
-.dongmanStyle{ width:204px; height:300px; float:left; background:url(${BASE_PATH}images/fm5.png); margin-left:20px;}
-.dongmanStyle:first-child{ margin-left:0px;}
+.todayDy{margin-left:10px; width:150px; float:left; cursor:pointer; border: 1px solid #ccc; border-radius: 5px; text-align: center; font-size: 13px; overflow: hidden; color:#666;}
+.todayDy:nth-child(6),.todayDy:nth-child(7),.todayDy:nth-child(8),.todayDy:nth-child(9),.todayDy:nth-child(10){margin-top:10px;}
+.todayDy:hover{border:1px solid #D00060;}
+.todayFirst .styName{margin-top:270px;}
+.todayFirst:hover{border:1px solid #D00060;}
+.totherClass{cursor:pointer; overflow:hidden; border-radius:5px; border:1px solid #ccc;}
+.moiveStyle{ width:204px; float:left; margin-left:22px; text-align:center; font-size:13px; color:#666;}
+.moiveStyle:first-child,.moiveStyle:nth-child(6){ margin-left:0px;}
+.moiveStyle:nth-child(6),.moiveStyle:nth-child(7),.moiveStyle:nth-child(8),.moiveStyle:nth-child(9),.moiveStyle:nth-child(10){margin-top:22px;}
+.moiveStyle:hover{border:1px solid #D00060;}
+.blue-slide{cursor:pointer;}
 </style>
 </head>
 <script>
@@ -32,18 +30,6 @@ $(function(){
 	});
 	$(".ulclassStype li").mouseout(function(){
 	 	$("#menubuttom").css("left","-100px");
-	});
-	$(".todayDy").mouseover(function(){
-	 	$(this).children(".styName").css("margin-top","100px").css("line-height","45px");
-	});
-	$(".todayDy").mouseout(function(){
-	 	$(this).children(".styName").css("margin-top","115px").css("line-height","30px");
-	});
-	$(".totherClass").mouseover(function(){
-	 	$(this).children(".styName").css("margin-top","255px").css("line-height","45px");
-	});
-	$(".totherClass").mouseout(function(){
-	 	$(this).children(".styName").css("margin-top","270px").css("line-height","30px");
 	});
 })
 </script>
@@ -66,7 +52,7 @@ $(function(){
 
 <!-- menu -->
 <div style="width:100%; height:50px; width:100%; background-color:#364153;">
-	<ul class="ulclassStype" style="width:1100px; overflow:hidden; list-style-type:none; margin:0px auto 0px auto; padding:0px; background:url(${BASE_PATH}images/menu_bg.jpg);">
+	<ul class="ulclassStype" style="width:1120px; overflow:hidden; list-style-type:none; margin:0px auto 0px auto; padding:0px; background:url(${BASE_PATH}images/menu_bg.jpg);">
 		<li id="chooseMenu" style="background:#101A25;"><a href="${BASE_PATH}page/index.html">纸飞机</a></li>
 		<li><a href="${BASE_PATH}page/kehuan.html">科幻片</a></li>
 		<li><a href="${BASE_PATH}page/zainan.html">灾难片</a></li>
@@ -82,29 +68,17 @@ $(function(){
 	<div id="menubuttom" style="position:absolute; border-bottom:3px solid #D00060; top:147px; left:-100px; width:80px; z-index:1;"></div>
 </div>
 
-<div style="width:1100px; margin-left:auto; margin-right:auto;">
+<div style="width:1120px; margin-left:auto; margin-right:auto;">
 	<div class="swiper-container">
 	  <div id="swiperBox" class="swiper-wrapper">
-	  	<div class="swiper-slide blue-slide">
-	  		<img src="${BASE_PATH}images/fm0.png" style="width:100%; font-size:0"/>
-	  		<div style="background:rgba(0,0,0,0.4); color:#fff; line-height:40px; margin-top: -40px; position: relative; font-size: 15px; padding-left: 10px;">童话世界的成人法则</div>
-	  	</div>
-	  	<div class="swiper-slide blue-slide">
-	  		<img src="${BASE_PATH}images/fm0.png" style="width:100%; font-size:0"/>
-	  		<div style="background:rgba(0,0,0,0.4); color:#fff; line-height:40px; margin-top: -40px; position: relative; font-size: 15px; padding-left: 10px;">童话世界的成人法则</div>
-	  	</div>
-	  	<div class="swiper-slide blue-slide">
-	  		<img src="${BASE_PATH}images/fm0.png" style="width:100%; font-size:0"/>
-	  		<div style="background:rgba(0,0,0,0.4); color:#fff; line-height:40px; margin-top: -40px; position: relative; font-size: 15px; padding-left: 10px;">童话世界的成人法则</div>
-	  	</div>
-	  	<div class="swiper-slide blue-slide">
-	  		<img src="${BASE_PATH}images/fm0.png" style="width:100%; font-size:0"/>
-	  		<div style="background:rgba(0,0,0,0.4); color:#fff; line-height:40px; margin-top: -40px; position: relative; font-size: 15px; padding-left: 10px;">童话世界的成人法则</div>
-	  	</div>
-	  	<div class="swiper-slide blue-slide">
-	  		<img src="${BASE_PATH}images/fm0.png" style="width:100%; font-size:0"/>
-	  		<div style="background:rgba(0,0,0,0.4); color:#fff; line-height:40px; margin-top: -40px; position: relative; font-size: 15px; padding-left: 10px;">童话世界的成人法则</div>
-	  	</div>
+	  	<% if( dybanner != null && dybanner.~size > 0 ){ %>
+			<% for(item in dybanner){ %>
+			<div class="swiper-slide blue-slide" onclick="details(${item.parentId})">
+		  		<img src="${BASE_PATH+item.dy_fmBanner}" style="width:100%; height:500px; font-size:0"/>
+		  		<div style="background:rgba(0,0,0,0.4); color:#fff; line-height:40px; margin-top: -40px; position: relative; font-size: 15px; padding-left: 10px;">${item.dy_title}</div>
+		  	</div>
+			<%}
+		}%>
 	  </div>
 	  <div class="swiper-pagination"></div>
 	  <!-- 如果需要导航按钮 -->
@@ -117,87 +91,43 @@ $(function(){
 <div style="width:100%; font-size:25px; color:#609FBF; margin-top:20px; margin-bottom:5px;">
 	<div style="width:1100px; height:100%; text-align:left; margin:0px auto;">今日更新</div>
 </div>
-<div style="width:100%; height:300px;">
-	<div style="width:1100px; height:100%; margin:0px auto;">
-		<a class="todayFirst totherClass" href="www.baidu.com" target="_blank" style="width:250px; text-decoration:none; height:100%; float:left; background:url(${BASE_PATH}images/fm3.png); display:block;">
-			<div class="styName" style="margin-top:270px;">超体在现贝克吉利娅大展烧脑功能</div>
-		</a>
-		<div style="width:840px; height:100%; float:left; margin-left:10px;">
-			<div style="width:100%; height:145px;">
-				<a class="todayDy">
-					<div class="styName">人民的民义</div>
-				</a>
-				<a class="todayDy">
-					<div class="styName">人民的民义</div>
-				</a>
-				<a class="todayDy">
-					<div class="styName">人民的民义</div>
-				</a>
-				<a class="todayDy">
-					<div class="styName">人民的民义</div>
-				</a>
-				<div style="clear:both;"></div>
-			</div>
-			<div style="width:100%; height:145px; margin-top:10px;">
-				<a class="todayDy">
-					<div class="styName">人民的民义</div>
-				</a>
-				<a class="todayDy">
-					<div class="styName">人民的民义</div>
-				</a>
-				<a class="todayDy">
-					<div class="styName">人民的民义</div>
-				</a>
-				<a class="todayDy">
-					<div class="styName">人民的民义</div>
-				</a>
+<div style="width:100%;">
+	<div style="width:1120px; margin:0px auto; overflow:hidden;">
+		<div class="todayFirst totherClass" onclick="details(${dynewFirst.parentId})" style="width:290px; text-decoration:none; float:left; display:block;">
+			<div style="width:100%; text-decoration:none; height:417px; float:left; background:url(${BASE_PATH+dynewFirst.dy_fm}) no-repeat; background-size:100% 100%;"></div>
+			<div style="line-height:40px; font-size:13px; color:#666; text-align:center;">${dynewFirst.dy_title}</div>
+		</div>
+		<div style="width:810px; height:100%; float:left; margin-left:17px;">
+			<div style="width:100%;">
+				<% if( dynew != null && dynew.~size > 0 ){ %>
+					<% for(item in dynew){ %>
+					<div class="todayDy" onclick="details(${item.parentId})">
+						<div style="background:url(${BASE_PATH+item.dy_fm}) no-repeat; background-size:100%; height:187.5px; width:150px;"></div>
+						<div style="line-height:35px;">${item.dy_name}</div>
+					</div>
+					<%}
+				}%>
 				<a style="clear:both;"></a>
-			</div>
 		</div>
 		<div style="clear:both;"></div>
 	</div>
 </div>
-
+<div style="clear:both;"></div>
 <!--kehuanpian-->
 <div style="width:100%; font-size:25px; color:#609FBF; margin-top:20px; margin-bottom:5px;">
 	<div style="width:1100px; height:100%; text-align:left; margin:0px auto;">科幻大片</div>
 </div>
-<div style="width:100%; height:610px;">
-	<div style="width:1100px; height:100%; margin:0px auto;">
-		<div style="width:100%; height:300px;">
-			<a class="kehuanStyle totherClass">
-				<div class="styName">X战警:逆转时空</div>
-			</a>
-			<a class="kehuanStyle totherClass">
-				<div class="styName">X战警:逆转时空</div>
-			</a>
-			<a class="kehuanStyle totherClass">
-				<div class="styName">X战警:逆转时空</div>
-			</a>
-			<a class="kehuanStyle totherClass">
-				<div class="styName">X战警:逆转时空</div>
-			</a>
-			<a class="kehuanStyle totherClass">
-				<div class="styName">X战警:逆转时空</div>
-			</a>
-			<div style="clear:both;"></div>
-		</div>
-		<div style="width:100%; height:300px; margin-top:10px;">
-			<a class="kehuanStyle totherClass">
-				<div class="styName">X战警:逆转时空</div>
-			</a>
-			<a class="kehuanStyle totherClass">
-				<div class="styName">X战警:逆转时空</div>
-			</a>
-			<a class="kehuanStyle totherClass">
-				<div class="styName">X战警:逆转时空</div>
-			</a>
-			<a class="kehuanStyle totherClass">
-				<div class="styName">X战警:逆转时空</div>
-			</a>
-			<a class="kehuanStyle totherClass">
-				<div class="styName">X战警:逆转时空</div>
-			</a>
+<div style="width:100%; overflow: hidden;">
+	<div style="width:1120px; height:100%; margin:0px auto;">
+		<div style="width:100%;">
+			<% if( dykehuan != null && dykehuan.~size > 0 ){ %>
+				<% for(item in dykehuan){ %>
+					<div class="moiveStyle totherClass" onclick="details(${item.parentId})">
+						<div style="width:204px; height:300px; background:url(${BASE_PATH+item.dy_fm}) no-repeat; background-size:100% 100%;"></div>
+						<div style="line-height:35px;">${item.dy_name}</div>
+					</div>
+				<%}
+			}%>
 			<div style="clear:both;"></div>
 		</div>
 	</div>
@@ -207,41 +137,17 @@ $(function(){
 <div style="width:100%; font-size:25px; color:#609FBF; margin-top:20px; margin-bottom:5px;">
 	<div style="width:1100px; height:100%; text-align:left; margin:0px auto;">灾难大片</div>
 </div>
-<div style="width:100%; height:610px;">
-	<div style="width:1100px; height:100%; margin:0px auto;">
+<div style="width:100%; overflow: hidden;">
+	<div style="width:1120px; height:100%; margin:0px auto;">
 		<div style="width:100%; height:300px;">
-			<a class="zainanStyle totherClass">
-				<div class="styName">2012</div>
-			</a>
-			<a class="zainanStyle totherClass">
-				<div class="styName">2012</div>
-			</a>
-			<a class="zainanStyle totherClass">
-				<div class="styName">2012</div>
-			</a>
-			<a class="zainanStyle totherClass">
-				<div class="styName">2012</div>
-			</a>
-			<a class="zainanStyle totherClass">
-				<div class="styName">2012</div>
-			</a>
-		</div>
-		<div style="width:100%; height:300px; margin-top:10px;">
-			<a class="zainanStyle totherClass">
-				<div class="styName">2012</div>
-			</a>
-			<a class="zainanStyle totherClass">
-				<div class="styName">2012</div>
-			</a>
-			<a class="zainanStyle totherClass">
-				<div class="styName">2012</div>
-			</a>
-			<a class="zainanStyle totherClass">
-				<div class="styName">2012</div>
-			</a>
-			<a class="zainanStyle totherClass">
-				<div class="styName">2012</div>
-			</a>
+			<% if( dyzainan != null && dyzainan.~size > 0 ){ %>
+				<% for(item in dyzainan){ %>
+					<div class="moiveStyle totherClass" onclick="details(${item.parentId})">
+						<div style="width:204px; height:300px; background:url(${BASE_PATH+item.dy_fm}) no-repeat; background-size:100% 100%;"></div>
+						<div style="line-height:35px;">${item.dy_name}</div>
+					</div>
+				<%}
+			}%>
 			<div style="clear:both;"></div>
 		</div>
 	</div>
@@ -251,42 +157,17 @@ $(function(){
 <div style="width:100%; font-size:25px; color:#609FBF; margin-top:20px; margin-bottom:5px;">
 	<div style="width:1100px; height:100%; text-align:left; margin:0px auto;">动作大片</div>
 </div>
-<div style="width:100%; height:610px;">
-	<div style="width:1100px; height:100%; margin:0px auto;">
+<div style="width:100%; overflow: hidden;">
+	<div style="width:1120px; height:100%; margin:0px auto;">
 		<div style="width:100%; height:300px;">
-			<a class="dongzuoStyle totherClass">
-				<div class="styName">王者之剑</div>
-			</a>
-			<a class="dongzuoStyle totherClass">
-				<div class="styName">王者之剑</div>
-			</a>
-			<a class="dongzuoStyle totherClass">
-				<div class="styName">王者之剑</div>
-			</a>
-			<a class="dongzuoStyle totherClass">
-				<div class="styName">王者之剑</div>
-			</a>
-			<a class="dongzuoStyle totherClass">
-				<div class="styName">王者之剑</div>
-			</a>
-			<div style="clear:both;"></div>
-		</div>
-		<div style="width:100%; height:300px; margin-top:10px;">
-			<a class="dongzuoStyle totherClass">
-				<div class="styName">王者之剑</div>
-			</a>
-			<a class="dongzuoStyle totherClass">
-				<div class="styName">王者之剑</div>
-			</a>
-			<a class="dongzuoStyle totherClass">
-				<div class="styName">王者之剑</div>
-			</a>
-			<a class="dongzuoStyle totherClass">
-				<div class="styName">王者之剑</div>
-			</a>
-			<a class="dongzuoStyle totherClass">
-				<div class="styName">王者之剑</div>
-			</a>
+			<% if( dydongzuo != null && dydongzuo.~size > 0 ){ %>
+				<% for(item in dydongzuo){ %>
+					<div class="moiveStyle totherClass" onclick="details(${item.parentId})">
+						<div style="width:204px; height:300px; background:url(${BASE_PATH+item.dy_fm}) no-repeat; background-size:100% 100%;"></div>
+						<div style="line-height:35px;">${item.dy_name}</div>
+					</div>
+				<%}
+			}%>
 			<div style="clear:both;"></div>
 		</div>
 	</div>
@@ -296,42 +177,17 @@ $(function(){
 <div style="width:100%; font-size:25px; color:#609FBF; margin-top:20px; margin-bottom:5px;">
 	<div style="width:1100px; height:100%; text-align:left; margin:0px auto;">动漫大片</div>
 </div>
-<div style="width:100%; height:610px;">
-	<div style="width:1100px; height:100%; margin:0px auto;">
+<div style="width:100%; overflow: hidden;">
+	<div style="width:1120px; height:100%; margin:0px auto;">
 		<div style="width:100%; height:300px;">
-			<a class="dongmanStyle totherClass">
-				<div class="styName">黄金战甲</div>
-			</a>
-			<a class="dongmanStyle totherClass">
-				<div class="styName">黄金战甲</div>
-			</a>
-			<a class="dongmanStyle totherClass">
-				<div class="styName">黄金战甲</div>
-			</a>
-			<a class="dongmanStyle totherClass">
-				<div class="styName">黄金战甲</div>
-			</a>
-			<a class="dongmanStyle totherClass">
-				<div class="styName">黄金战甲</div>
-			</a>
-			<div style="clear:both;"></div>
-		</div>
-		<div style="width:100%; height:300px; margin-top:10px;">
-			<a class="dongmanStyle totherClass">
-				<div class="styName">黄金战甲</div>
-			</a>
-			<a class="dongmanStyle totherClass">
-				<div class="styName">黄金战甲</div>
-			</a>
-			<a class="dongmanStyle totherClass">
-				<div class="styName">黄金战甲</div>
-			</a>
-			<a class="dongmanStyle totherClass">
-				<div class="styName">黄金战甲</div>
-			</a>
-			<a class="dongmanStyle totherClass">
-				<div class="styName">黄金战甲</div>
-			</a>
+			<% if( dydongman != null && dydongman.~size > 0 ){ %>
+				<% for(item in dydongman){ %>
+					<div class="moiveStyle totherClass" onclick="details(${item.parentId})">
+						<div style="width:204px; height:300px; background:url(${BASE_PATH+item.dy_fm}) no-repeat; background-size:100% 100%;"></div>
+						<div style="line-height:35px;">${item.dy_name}</div>
+					</div>
+				<%}
+			}%>
 			<div style="clear:both;"></div>
 		</div>
 	</div>
@@ -347,8 +203,7 @@ $(function(){
 		国家广播电影电视总局电影卫星频道节目制作中心 版权所有
 	</div>
 </div>
-<!--<a id="imageBack" style="cursor:pointer; display:block; width:200px; height:145px; position:absolute; z-index:1; background:url(${BASE_PATH}images/logoBack.png) no-repeat center;">
-</a>-->
+<!--<a id="imageBack" style="cursor:pointer; display:block; width:200px; height:145px; position:absolute; z-index:1; background:url(${BASE_PATH}images/logoBack.png) no-repeat center;"></a>-->
 <script src="${BASE_PATH}js/swiper.min.js"></script>
 <script>
 //初始化banner
@@ -361,6 +216,10 @@ var mySwiper = new Swiper('.swiper-container',{
     prevButton: '.swiper-button-prev',
 	paginationClickable: true
 });
+
+function details(value){
+	window.open("${BASE_PATH}page/details.html?moivesign="+value);
+}
 </script>
 </body>
 </html>

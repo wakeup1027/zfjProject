@@ -52,6 +52,8 @@ $(function(){
 				    {field: 'dy_createTime', title:'创建时间', width:150,formatter:fotmateDate}
 	    ]]
 	});
+	
+	
 });
 
 var numUrl = "";
@@ -126,6 +128,9 @@ function update(){
 }
 
 function submitForm(){
+	$("#dy_url").textbox('setValue',editor1.txt.html());
+	$("#dy_info").textbox('setValue',editor2.txt.html());
+	$("#dy_mess").textbox('setValue',editor3.txt.html());
 	if(checkData()){
 		$('#importfm').ajaxSubmit({  
 			url: numUrl,
@@ -210,7 +215,16 @@ function EasyUIload(jsondate){
         }else if(key=="dy_fmBanner"){
         	$("#show_fmbanner").attr("src","${BASE_PATH}"+jsondate[key]);
         }else{
-        	$("#"+key).textbox('setValue',jsondate[key]);
+        	if(key=="dy_url"){
+				editor1.txt.html(jsondate[key]);
+        	}else if(key=="dy_info"){
+        		editor2.txt.html(jsondate[key]);
+        	}else if(key=="dy_mess"){
+        		editor3.txt.html(jsondate[key]);
+        	}else{
+        		$("#"+key).textbox('setValue',jsondate[key]);	
+        	}
+        	
         }
     }
     
@@ -275,20 +289,22 @@ Date.prototype.format = function (format) {
 	<div id="dg" style="width:100%; height:100%;"></div>
 </div>
 
-<div id="dlg" class="easyui-dialog" style="width:520px; height:400px; padding: 10px 20px" closed="true" buttons="#dlg-buttons">
+<div id="dlg" class="easyui-dialog" style="width:1000px; height:600px; padding: 10px 20px" closed="true" buttons="#dlg-buttons">
 	<form id="importfm" method="post"  enctype="multipart/form-data" novalidate >
-	<table cellspacing="5" style="font-size:13px;">
+	<table border="0" cellspacing="5" style="font-size:13px; width:850px;">
 		<tr style="display:none;">
 			<td colspan="3"><input type="text" id="id" name="model.id" class="easyui-textbox"/></td>
 		</tr>
 		<tr>
-			<td><label>电影名称：</label></td>
+			<td style="width:70px;"><label>电影名称：</label></td>
 			<td colspan="2"><input type="text" id="dy_name" name="model.dy_name" class="easyui-textbox" style="width:250px;"/></td>
 		</tr>
 		<tr>
 			<td><label>电影类型：</label></td>
-			<td><input type="text" id="dy_type" name="model.dy_type" class="easyui-textbox" readonly style="width:225px;"/>
-				<input id="idtypeBtn" type="button" value="X" title="清空" style="color:#999; border-radius:5px; border:1px solid #D3D3D3; background:#fff; outline:none; padding:2px 7px; cursor: pointer; float:right;"></td>
+			<td style="width:252px;">
+				<input type="text" id="dy_type" name="model.dy_type" class="easyui-textbox" readonly style="width:225px;"/>
+				<input id="idtypeBtn" type="button" value="X" title="清空" style="color:#999; border-radius:5px; border:1px solid #D3D3D3; background:#fff; outline:none; padding:2px 7px; cursor: pointer; float:right;">
+			</td>
 			<td>
 				<select id="dyTypeSel" class="easyui-combobox" data-options="panelHeight:'auto',valueField: 'id', textField: 'value',
 					data: [{
@@ -341,16 +357,6 @@ Date.prototype.format = function (format) {
 				</select>
 			</td>
 		</tr>
-		<!-- <tr>
-			<td><label>推荐滚动：</label></td>
-			<td><input type="radio" name="model.dy_bannerTj" value="1"/>推荐</td>
-			<td><input type="radio" name="model.dy_bannerTj" value="0"/>不推荐</td>
-		</tr>
-		<tr>
-			<td><label>推荐电影：</label></td>
-			<td><input type="radio" name="model.dy_firstTj" value="1"/>推荐</td>
-			<td><input type="radio" name="model.dy_firstTj" value="0"/>不推荐</td>
-		</tr> -->
 		<tr>
 			<td><label>电影标签：</label></td>
 			<td><input type="text" id="dy_tab" name="model.dy_tab" class="easyui-textbox" readonly style="width:225px;"/>
@@ -365,10 +371,6 @@ Date.prototype.format = function (format) {
 			<td colspan="2"><input type="text" id="dy_title" name="model.dy_title" class="easyui-textbox" style="width:250px;"/></td>
 		</tr>
 		<tr>
-			<td><label>下载地址：</label></td>
-			<td colspan="2"><input type="text" id="dy_url" name="model.dy_url" class="easyui-textbox" style="width:250px;"/></td>
-		</tr>
-		<tr>
 			<td><label><div>封　　面：</div><div style="color:#ff0000; font-size:12px;">340*540</div></label></td>
 			<td><input name="model.dy_fm" id="dy_fm" data-options="prompt:'请选择上传图片',buttonText:'&nbsp;选&nbsp;择&nbsp;'" class="easyui-filebox" style="width:250px;"/></td>
 			<td><img id="show_fm" src="" style="width:50px; height:50px;"/></td>
@@ -378,13 +380,37 @@ Date.prototype.format = function (format) {
 			<td><input name="model.dy_fmBanner" id="dy_fmbanner" data-options="prompt:'请选择上传图片',buttonText:'&nbsp;选&nbsp;择&nbsp;'" class="easyui-filebox" style="width:250px;"/></td>
 			<td><img id="show_fmbanner" src="" style="width:50px; height:50px;"/></td>
 		</tr>
-		<tr>
+		<tr style="display:none">
+			<td><label>下载地址：</label></td>
+			<td colspan="2">
+				<input type="text" id="dy_url" name="model.dy_url" class="easyui-textbox" data-options="multiline:true" style="width:320px; height:100px"/>
+			</td>
+		</tr>
+		<tr style="display:none">
 			<td style="vertical-align: baseline;"><label>简短描述：</label></td>
 			<td colspan="2"><input type="text" id="dy_info" name="model.dy_info" class="easyui-textbox" data-options="multiline:true" style="width:320px; height:100px"/></td>
 		</tr>
-		<tr>
+		<tr style="display:none">
 			<td style="vertical-align: baseline;"><label>剧情介绍：</label></td>
 			<td colspan="2"><input type="text" id="dy_mess" name="model.dy_mess" class="easyui-textbox" data-options="multiline:true" style="width:320px; height:200px"/></td>
+		</tr>
+		<tr>
+			<td style="vertical-align: baseline;"><label>下载地址：</label></td>
+			<td colspan="2">
+				<div id="addDown"></div>
+			</td>
+		</tr>
+		<tr>
+			<td style="vertical-align: baseline;"><label>简短描述：</label></td>
+			<td colspan="2">
+				<div id="dyms"></div>
+			</td>
+		</tr>
+		<tr>
+			<td style="vertical-align: baseline;"><label>剧情介绍：</label></td>
+			<td colspan="2">
+				<div id="dyMess"></div>
+			</td>
 		</tr>
 	</table>
 	</form>
@@ -393,5 +419,36 @@ Date.prototype.format = function (format) {
 	<a href="javascript:void(0)" class="easyui-linkbutton" id="saveBean" iconCls="icon-ok" onclick="submitForm()" style="displaly:block;width: 90px">保存</a> 
 	<a href="javascript:void(0)" class="easyui-linkbutton" id="saveCancel" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
 </div>
+<script src="${BASE_PATH}js/wangEditor.min.js"></script>
+<script>
+var E = window.wangEditor;
+
+var editor1 = new E('#addDown');
+editor1.customConfig.uploadImgServer = '${BASE_PATH}admincon/uploadImage';
+editor1.customConfig.uploadImgMaxSize = 3*1024*1024;
+editor1.customConfig.uploadFileName = 'upfile';
+editor1.customConfig.uploadImgHeaders = {'Accept':'multipart/form-data'};
+editor1.customConfig.showLinkImg = false;
+editor1.customConfig.debug = true;
+editor1.create();
+
+var editor2 = new E('#dyms');
+editor2.customConfig.uploadImgServer = '${BASE_PATH}admincon/uploadImage';
+editor2.customConfig.uploadImgMaxSize = 3*1024*1024;
+editor2.customConfig.uploadFileName = 'upfile';
+editor2.customConfig.uploadImgHeaders = {'Accept':'multipart/form-data'};
+editor2.customConfig.showLinkImg = false;
+editor2.customConfig.debug = true;
+editor2.create();
+
+var editor3 = new E('#dyMess');
+editor3.customConfig.uploadImgServer = '${BASE_PATH}admincon/uploadImage';
+editor3.customConfig.uploadImgMaxSize = 3*1024*1024;
+editor3.customConfig.uploadFileName = 'upfile';
+editor3.customConfig.uploadImgHeaders = {'Accept':'multipart/form-data'};
+editor3.customConfig.showLinkImg = false;
+editor3.customConfig.debug = true;
+editor3.create();
+</script>
 </body>
 </html>
