@@ -17,6 +17,7 @@ import com.bean.DyXuanyi;
 import com.bean.DyZainan;
 import com.config.ControllerBind;
 import com.jfinal.core.Controller;
+import com.tool.cache.CacheUntil;
 
 @ControllerBind(controllerKey = "/page")
 public class PageController extends Controller {
@@ -109,13 +110,14 @@ public class PageController extends Controller {
 	
 	public void details(){
 		DyTable dt = DyTable.dao.findById(getParaToInt("moivesign"));
-		List<DyDownNum> downNum = DyDownNum.dao.find("SELECT * FROM dyDownNum ORDER BY downNum DESC");
+		List<DyDownNum> downNum = DyDownNum.dao.findCache("cachename", "key", "SELECT * FROM dyDownNum ORDER BY downNum DESC");
 		if(null==dt){
 			DyTable dtnull = new DyTable();
 			setAttr("dtDate", dtnull);
 		}else{
 			setAttr("dtDate", dt);
 		}
+		//CacheUntil.get("cachename").clear(); //«Â¿Ìª∫¥Ê
 		setAttr("downNum", downNum);
 		render("/details.html");
 	}
